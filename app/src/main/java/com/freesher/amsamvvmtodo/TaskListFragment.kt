@@ -37,16 +37,16 @@ class TaskListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // val taskId = arguments?.getInt("id")
         database = TaskRepository(activity!!.application)
         taskViewModelFactory = TaskViewModelFactory(database,activity!!.application)
         taskViewModel = ViewModelProviders.of(this,taskViewModelFactory).get(TaskViewModel::class.java)
         linearLayoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-        adapter = TaskAdapter(activity!!)
+        adapter = TaskAdapter(requireContext(), taskViewModel)
         taskRecyclerView.adapter = adapter
         taskRecyclerView.layoutManager = linearLayoutManager
         taskViewModel.allTasks.observe(viewLifecycleOwner, Observer {tasks->
             tasks?.let { adapter.setTasks(tasks) }
-
         })
 
 

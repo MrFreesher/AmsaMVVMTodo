@@ -3,6 +3,8 @@ package com.freesher.amsamvvmtodo.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
+
 
 @Entity(tableName = "task_table")
 data class Task(
@@ -11,8 +13,9 @@ data class Task(
     var title: String,
     var description: String,
     val priority: Int,
-    val status: String = "todo",
+    var status: String = "todo",
     var date:String
+
 
 ){
 

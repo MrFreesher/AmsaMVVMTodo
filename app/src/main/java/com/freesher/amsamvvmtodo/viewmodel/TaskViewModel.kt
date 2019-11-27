@@ -21,35 +21,27 @@ class TaskViewModel(
         super.onCleared()
 
     }
+
     init {
         allTasks = database.getAllTasks()
     }
 
 
-
-      fun insertTask(task: Task) {
-
-
-            database.addTask(task)
+    fun insertTask(task: Task) {
+        database.addTask(task)
+    }
 
 
+    fun updateTask(task: Task) {
+        database.updateTask(task)
 
     }
 
 
+    fun deleteTask(task: Task) {
 
 
-        fun updateTask(task: Task){
-            database.updateTask(task)
-
-    }
-
-
-
-      fun deleteTask(task: Task) {
-
-
-            database.deleteTask(task)
+        database.deleteTask(task)
 
 
     }

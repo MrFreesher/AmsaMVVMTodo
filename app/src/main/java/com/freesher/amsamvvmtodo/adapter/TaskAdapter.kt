@@ -4,18 +4,24 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.freesher.amsamvvmtodo.MainActivity
 import com.freesher.amsamvvmtodo.R
+import com.freesher.amsamvvmtodo.TaskListFragment
 import com.freesher.amsamvvmtodo.model.Task
+import com.freesher.amsamvvmtodo.viewmodel.TaskViewModel
 import kotlinx.android.synthetic.main.list_row.view.*
 
-class TaskAdapter(private val context: Context) :
+class TaskAdapter(private val context: Context, private val viewModel: TaskViewModel) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
-    private var taskList:List<Task> = emptyList<Task>()
+    private var taskList: List<Task> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_row, parent, false)
+
         return TaskViewHolder(
             view
         )
@@ -32,19 +38,29 @@ class TaskAdapter(private val context: Context) :
             else -> holder.priorityContent.text = "Low"
         }
         holder.dateContent.text = taskList[position].date
+        holder.deleteBtn.setOnClickListener {
+            viewModel.deleteTask(taskList[position])
+        }
+        holder.view.setOnClickListener {
+            val fragment = context as TaskListFragment
+            val activity = fragment.activity as MainActivity
+            activity.replaceFragment("edit", taskList[position].id!!)
 
-
+        }
     }
+
+
     fun setTasks(newTaskList: List<Task>){
         taskList = newTaskList
         notifyDataSetChanged()
     }
 
-    class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class TaskViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val titleContent: TextView = view.titleContent
         val statusContent: TextView = view.statusContent
         val dateContent: TextView = view.dateContent
         val priorityContent: TextView = view.priorityContent
+        val deleteBtn: Button = view.removeTaskBtn
 
     }
 }
