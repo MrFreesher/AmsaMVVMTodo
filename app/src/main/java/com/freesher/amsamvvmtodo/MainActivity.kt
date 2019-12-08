@@ -15,22 +15,23 @@ class MainActivity : AppCompatActivity() {
         replaceFragment("show")
     }
 
-    fun replaceFragment(action:String,id:Int=0){
-        val transaction = supportFragmentManager.beginTransaction()
-        when(action){
-            "show"->{
-                transaction.replace(R.id.fragment_container,TaskListFragment()).addToBackStack(null)
+        fun replaceFragment(action: String, id: Int = 0) {
+            val transaction = supportFragmentManager.beginTransaction()
+            when (action) {
+                "show" -> {
+                    transaction.replace(R.id.fragment_container, TaskListFragment())
+                        .addToBackStack(null)
+                }
+                "edit" -> {
+                    val bundle = Bundle()
+                    bundle.putInt("id", id)
+                    val editFragment = EditTaskFragment()
+                    editFragment.arguments = bundle
+                    transaction.replace(R.id.fragment_container, editFragment).addToBackStack(null)
+                }
             }
-            "edit"->{
-                val bundle = Bundle()
-                bundle.putInt("id",id)
-                val editFragment = EditTaskFragment()
-                editFragment.arguments = bundle
-                transaction.replace(R.id.fragment_container,editFragment).addToBackStack(null)
-            }
+            transaction.commit()
         }
-        transaction.commit()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater = MenuInflater(applicationContext).inflate(R.menu.toolbar_menu,menu)

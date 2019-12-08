@@ -42,9 +42,8 @@ class TaskAdapter(private val context: Context, private val viewModel: TaskViewM
             viewModel.deleteTask(taskList[position])
         }
         holder.view.setOnClickListener {
-            val fragment = context as TaskListFragment
-            val activity = fragment.activity as MainActivity
-            activity.replaceFragment("edit", taskList[position].id!!)
+            val mainActivity = context as MainActivity
+            mainActivity.replaceFragment("edit", taskList[position].id!!)
 
         }
     }
